@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/ex.css">
+    <title>메뉴</title>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/test.js"></script>
+
+    <script src="script/jquery-1.12.3.js"></script>
+    <script>
+        $(document).ready(function(){
+            //메인 이미지 슬라이드
+            //초기정렬
+            $('.slide').each(function(index){
+                $(this).css('top',-index*400);
+            });
+            //무한 반복 슬라이더
+            setInterval(function(){
+                $('.slide').each(function(index){
+                    $(this).show().animate({top:400-index*400},'slow');
+                });
+                $('.slide').eq(4).hide().animate({top:-1600},'slow');
+                $('.slide').first().appendTo($('#main_slide_box'));
+            },2000);
+        });
+    </script>
+    <style>
+        #wrap>#main_slide_box{
+            width:1960px;	height:600px;
+            position:relative;
+            overflow:hidden;
+        }
+        #main_slide_box>.slide{
+            position:absolute;
+        }
+    </style>
+
+
+</head>
+<body>
+<div id="header-wrap">
+    <header class="header-inner">
+        <h1>헬사모 사이트</h1>
+        <nav id="menu">
+            <ul>
+                <li class="m1">
+                    <a href="/">운동 메인</a>
+                    <ul class='submenu'>
+                        <li><a href="/insert">헬스 루틴 넣기</a></li>
+                        <li></li>
+                    </ul>
+                </li>
+                <li class="m2">
+                    <a href="/best">오늘의랜덤 PT선생님</a>
+                    <ul class='submenu'>
+                        <li><a href="/best">오늘의랜덤 PT선생님</a></li>
+                    </ul>
+                </li>
+                <li class="m1">
+                    <a href="/best">입력한 운동 보기</a>
+                    <ul class='submenu'>
+                        <li><a href="/see">헬스 루틴 보기</a></li>
+                    </ul>
+                </li>
+                <li class="m1">
+                    <a href="/melon">운동할때 들을 음악 리스트</a>
+                    <ul class='submenu'>
+                        <li><a href="/melon">멜론 음악 차트</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+</div>
