@@ -71,6 +71,4 @@ public class HelloApiController {
         return new ResponseEntity<List<MenuVo>>(list, HttpStatus.OK);
     }
 
-
-
 }

@@ -61,6 +61,8 @@ public class JsoupComponentLocalMain {
         return sb.toString();
     }
 
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
     public static void getMelonMusicList() {
 
         final String stockList = "https://www.melon.com/chart/index.htm";
@@ -112,8 +114,104 @@ public class JsoupComponentLocalMain {
         return sb.toString();
     }
 
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+    public static void getMovieRankList() {
+
+        final String stockList = "https://movie.naver.com/movie/sdb/rank/rmovie.naver";
+        Connection conn = Jsoup.connect(stockList);
+
+        try {
+            Document document = conn.get();
+            //  String thead = getStockHeader(document); // 칼럼명
+            String tbody = getMovieList(document);   // 데이터 리스트
+            //   System.out.println(thead);
+            System.out.println(tbody);
+
+        } catch (IOException ignored) {
+        }
+    }
+
+
+    public static String getMovieList(Document document) {
+        Elements stockTableBody = document.select("td.title");
+        StringBuilder sb = new StringBuilder();
+        for (Element element : stockTableBody) {
+
+            for (Element td : element.select("td.ac")) {
+                String text;
+                text= td.select("img.get(src)").text(); //순위
+                if(!text.isEmpty())
+                    sb.append("순위: "+text);
+            }
+
+            for (Element td : element.select("div.tit3")) {
+                String text;
+
+                text = td.select(".tit3 a").text(); //영화제목
+                if (!text.isEmpty())
+                    sb.append("제목: " + text);
+                sb.append("  ");
+            }
+
+
+            sb.append(System.getProperty("line.separator")); //줄바꿈
+        }
+        return sb.toString();
+    }
+
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+
+    public static void getMovieRankList2() {
+
+        final String stockList = "https://movie.naver.com/movie/running/current.naver";
+        Connection conn = Jsoup.connect(stockList);
+
+        try {
+            Document document = conn.get();
+            //  String thead = getStockHeader(document); // 칼럼명
+            String tbody = getMovieList(document);   // 데이터 리스트
+            //   System.out.println(thead);
+            System.out.println(tbody);
+
+        } catch (IOException ignored) {
+        }
+    }
+
+
+    public static String getMovieList2(Document document) {
+        Elements stockTableBody = document.select("div.lst_wrap");
+        StringBuilder sb = new StringBuilder();
+        for (Element element : stockTableBody) {
+           for (Element td : element.select("div")) {
+                String text;
+                if(td.select(".lst_detail_t1").attr("div.thumb").isEmpty()){
+                    text = td.text();
+                    sb.append("이미지: "+text);
+                    sb.append("   ");
+                }
+                if(td.select("dl.lst_dsc").attr("dt.tit").isEmpty()){
+                    text = td.text();
+                    sb.append("제목: "+text);
+                    sb.append("   ");
+                }else{
+
+                }
+                sb.append("   ");
+            }
+//            sb.append(System.getProperty("line.separator")); //줄바꿈
+        }
+        return sb.toString();
+    }
+
+
+
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     public static void main(String[] args) {
 //        getStockPriceList();
-        getMelonMusicList();
+//        getMelonMusicList();
+  //      getMovieRankList();
+        getMovieRankList2();
     }
 }
